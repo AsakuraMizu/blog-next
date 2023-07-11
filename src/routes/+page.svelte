@@ -1,51 +1,48 @@
-<script>
-  import Counter from '$lib/Counter.svelte';
-  import viteLogo from '$lib/assets/vite.svg';
-  import svelteLogo from '$lib/assets/svelte.svg';
-  import unoLogo from '$lib/assets/uno.svg';
-</script>
-
 <svelte:head>
-  <title>Vite + SvelteKit + UnoCSS</title>
-  <meta name="description" content="Svelte demo app" />
+  <title>Asakura Mizu's Blog</title>
+  <meta name="description" content="Asakura Mizu's Blog" />
 </svelte:head>
 
-<div p="8" text="center">
-  <div>
-    <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-      <img src={viteLogo} class="logo" alt="Vite Logo" />
-    </a>
-    <a href="https://kit.svelte.dev" target="_blank" rel="noreferrer">
-      <img src={svelteLogo} class="logo sveltekit" alt="SvelteKit Logo" />
-    </a>
-    <a href="https://github.com/unocss/unocss" target="_blank" rel="noreferrer">
-      <img src={unoLogo} class="logo uno" alt="UnoCSS Logo" />
-    </a>
-  </div>
-  <h1 text="5xl" font="bold">Vite + SvelteKit + UnoCSS</h1>
-
-  <div p="8">
-    <Counter />
-  </div>
+<!-- prettier-ignore -->
+<div max-w="192" class="post">
+  <h1>Asakura Mizu</h1>
+  <p>
+    <del>The man who is always lazy to design homepage.</del>
+    <br />
+    A developer, mostly open-source. Currently a college student.
+  </p>
+  <p>
+    This is my new blog for sharing some projects and technological things,
+    written by myself and running on <a href="https://vercel.com/" rel="noopener">Vercel</a>.
+    You can see how this blog is built in this post:
+    <a href="/posts/hello-world">Hello world!</a>
+    <br />
+    The main language for this blog will be English, but there will be some Chinese posts as well.
+  </p>
+  <p>
+    Feel free to contact me. You can find me at:
+  </p>
+  <ul w="children:fit">
+    <li>
+      <a href="https://github.com/AsakuraMizu" flex="~" items="center" gap="2">
+        <span class="i-simple-icons:github" display="inline-block" />
+        GitHub: Asakura Mizu
+      </a>
+    </li>
+    <li>
+      <a href="https://space.bilibili.com/179360130" flex="~" items="center" gap="2">
+        <span class="i-simple-icons:bilibili" display="inline-block" />
+        哔哩哔哩: 朝倉みず
+      </a>
+    </li>
+    <li>
+      <a href="https://twitter.com/water_lift" flex="~" items="center" gap="2">
+        <span class="i-simple-icons:twitter" display="inline-block" />
+        Twitter (not commonly used): water_lift
+      </a>
+    </li>
+  </ul>
+  <p>
+    Not disclosing QQ number, sorry for that. (Although you can find me on QQ easily)
+  </p>
 </div>
-
-<style>
-  .logo {
-    display: inline;
-    height: 9em;
-    padding: 1.5em;
-    will-change: filter;
-  }
-
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-  }
-
-  .logo.sveltekit:hover {
-    filter: drop-shadow(0 0 2em #ff3e00aa);
-  }
-
-  .logo.uno:hover {
-    filter: drop-shadow(0 0 2em #484848aa);
-  }
-</style>

@@ -1,0 +1,46 @@
+:root {
+  --bg: #f9f9f9;
+  --fg: #555;
+  --fg-deep: #222;
+  --fg-deeper: #000;
+
+  @media (prefers-color-scheme: dark) {
+    --bg: #242424;
+    --fg: #bbb;
+    --fg-deep: #ddd;
+    --fg-deeper: #fff;
+  }
+
+  background-color: var(--bg);
+  color: var(--fg);
+}
+
+html {
+  @apply scroll-smooth;
+}
+
+body {
+  font-family: 'Rubik';
+}
+
+main,
+footer {
+  a {
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(125, 125, 125, 0.3);
+    transition: border 0.3s ease-in-out;
+
+    &:hover {
+      border-bottom: 1px solid var(--fg);
+    }
+
+    code {
+      color: inherit;
+    }
+  }
+}
+
+img {
+  @apply w-full;
+}

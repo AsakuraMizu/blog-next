@@ -15,6 +15,7 @@ declare namespace svelteHTML {
     | 'flex'
     | 'bg'
     | 'text'
+    | 'float'
     | 'font'
     | 'op'
     | 'animate'
