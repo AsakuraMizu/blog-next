@@ -56,7 +56,7 @@ So you know how to do it. Instead of writing blog post in something like `posts/
 
 Generating post list is rather simple, [Vite Glob Import](https://vitejs.dev/guide/features.html#glob-import) is enough. And thanks to MDsveX and [`<script context="module">`](https://svelte.dev/docs/svelte-components#script-context-module), frontmatter data can be exported in module [`metadata`](https://mdsvex.pngwn.io/docs#frontmatter-1).
 
-A post loader example (`src/lib/posts.ts`):
+A post loader example ([`src/lib/posts.ts`](https://github.com/AsakuraMizu/blog-next/blob/648e34d2159654d10fc32c4b0851d1297e3402fe/src/lib/posts.ts)):
 
 ```ts
 export const posts = Object.fromEntries(
@@ -80,7 +80,7 @@ export const posts = Object.fromEntries(
 
 This imports all posts in `src/routes/posts/(posts)/[name]/+page.svx` (notice [layout group](https://kit.svelte.dev/docs/advanced-routing#advanced-layouts-group) is used here in order to enable `/posts` page to use different layout than `/posts/[name]` pages), gets their url pathname for further quick matching and sort posts by time.
 
-Then you can use this `posts` in `src/routes/posts/+page.svelte` to list posts, and get post metadata in `src/routes/posts/(posts)/+layout.page` using `posts[$page.url.pathname]`.
+Then you can use this `posts` in [`src/routes/posts/+page.svelte`](https://github.com/AsakuraMizu/blog-next/blob/648e34d2159654d10fc32c4b0851d1297e3402fe/src/routes/posts/%2Bpage.svelte) to list posts, and get post metadata in [`src/routes/posts/(posts)/+layout.page`](https://github.com/AsakuraMizu/blog-next/blob/648e34d2159654d10fc32c4b0851d1297e3402fe/src/routes/posts/(posts)/%2Blayout.svelte) using `posts[$page.url.pathname]`.
 
 ## Other enhancements
 
@@ -125,4 +125,4 @@ Some notes:
 - `{}` in svelte files will be processed by svelte compiler as svelte syntax... So these two characters must be escaped after running highlighter, for example using `.replace(/[{}]/g, (c) => ({ '{': '&#123;', '}': '&#125;' }[c]))`
 - Shiki themes are "inline", that is, set styles on code block tokens directly instead of using seperate css files. The good thing is it avoids conflicts between stylesheets, but the bad thing is it is difficult to support dark mode.
 
-  As [documented](https://github.com/shikijs/shiki/blob/main/docs/themes.md#2-generate-two-shiki-code-blocks-one-for-each-theme) in shiki, we can generate two code blocks and show them respectively under different color scheme. You can refer to `svelte.config.js` to see how it is implemented in this blog. Note that it is adapted from [markdown-it-shiki](https://github.com/antfu/markdown-it-shiki).
+  As [documented](https://github.com/shikijs/shiki/blob/main/docs/themes.md#2-generate-two-shiki-code-blocks-one-for-each-theme) in shiki, we can generate two code blocks and show them respectively under different color scheme. You can refer to [`svelte.config.js`](https://github.com/AsakuraMizu/blog-next/blob/648e34d2159654d10fc32c4b0851d1297e3402fe/svelte.config.js) to see how it is implemented in this blog. Note that it is adapted from [markdown-it-shiki](https://github.com/antfu/markdown-it-shiki).
