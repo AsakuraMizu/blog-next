@@ -11,11 +11,11 @@
 
   <div flex="~ col" gap="4" p="5">
     {#each Object.entries(posts) as [path, post] (path)}
-      <a href={path}>
+      <a href={path} font="normal">
         <span>{post.title}</span>
         {#if post.tags}
           {#each post.tags as tag}
-            <span bg="slate/30" border="rounded" text="sm" p="0.5">#{tag}</span>
+            <span bg="slate/30" border="rounded" text="sm" p="0.5" m="x-0.5">#{tag}</span>
           {/each}
         {/if}
         {#if post.author}

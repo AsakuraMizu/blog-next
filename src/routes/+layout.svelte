@@ -1,5 +1,10 @@
 <script lang="ts">
-  import '@fontsource/rubik';
+  import '@fontsource/noto-sans-sc/400.css';
+  import '@fontsource/noto-sans-sc/500.css';
+  import '@fontsource/noto-sans-sc/700.css';
+  import '@fontsource/rubik/400.css';
+  import '@fontsource/rubik/500.css';
+  import '@fontsource/rubik/700.css';
   import '@unocss/reset/tailwind.css';
   import dayjs from 'dayjs';
   import relativeTime from 'dayjs/plugin/relativeTime';
@@ -18,12 +23,11 @@
   flex="~ col"
   items="center"
   min-h="screen"
-  min-w="320px"
   text="base"
   font="normal synthesis-none antialiased"
 >
-  <header flex="~" w="full" justify="between" items="center">
-    <a href="/" select="none" w="8" h="8" m="4">
+  <header w="full">
+    <a pos="absolute lg:fixed" href="/" select="none" w="8" h="8" m="4">
       <img src="$lib/assets/logo.png" alt="blog" class="logo logo-light" />
       <img src="$lib/assets/logo-dark.png" alt="blog" class="logo logo-dark" />
     </a>
@@ -44,7 +48,7 @@
         h="5"
       />
     </button>
-    <nav flex="~" p="6" gap="6" items="center">
+    <nav float="right" flex="~" p="6" gap="6" items="center">
       <a href="/posts">Posts</a>
       <a href="/projects">Projects</a>
       <a href="https://github.com/AsakuraMizu" rel="noopener">

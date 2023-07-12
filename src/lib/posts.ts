@@ -29,5 +29,5 @@ export const posts = Object.fromEntries(
         time: dayjs(metadata.time),
       },
     ])
-    .sort((a, b) => b[1].time.unix() - a[1].time.unix())
+    .sort(([, a], [, b]) => b.time.unix() - a.time.unix())
 );

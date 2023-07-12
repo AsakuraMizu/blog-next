@@ -1,6 +1,128 @@
 ---
-title: Hello world!
+title: Hello world! - How this blog is built
 time: 2023-7-11 0:30
+tags:
+  - web
+  - svelte
 ---
 
-Hello world!
+## TOC
+
+## Related projects
+
+### Libraries
+
+- [Vite](https://vitejs.dev/)
+  - [Imagetools](https://github.com/JonasKruckenberg/imagetools)
+  - [UnoCSS](unocss.dev/)
+  - [(PostCSS)](https://postcss.org/)
+- [SvelteKit](https://kit.svelte.dev/)
+  - [MDsveX](https://mdsvex.pngwn.io/)
+    - [(remark)](https://remark.js.org)
+    - [(rehype)](https://github.com/rehypejs/rehype)
+    - [Shiki](https://shiki.matsu.io/)
+
+### Special Thanks
+
+[Anthony Fu's personal website](https://antfu.me/) for many designs and styles (partly copy-and-pasted currently, but may be rewritten later)
+
+## Motivation
+
+**Static site generation** - there are already many tools for it, including from complex ones like [Hexo](https://hexo.io/) and [HUGO](https://gohugo.io/), to simple ones like [VitePress](https://vitepress.dev/) and [MkDocs](https://www.mkdocs.org/).
+
+[My previous blog](https://github.com/AsakuraMizu/blog) is based on Hexo. I set it up when I was in high school, and at that time I was rather new to web designing. Honestly, Hexo is easy to use; but when it comes to theming, it is totally a mess. You need to find a desirable theme, read their long doc and set up their complex config. The most unbearable: you need to write ejs if you want to do more customization or create your own theme. ~~What the f\*ck is this sh\*t language~~
+
+Other solutions like VitePress, are not blog generating tools in fact.
+
+There is also another kind of solutions for blogging: a full website with Markdown generated pages, like https://github.com/wutali/nextjs-netlify-blog-template and https://github.com/josh-collinsworth/sveltekit-blog-starter. They are awesome, easy-to-use and fully customizable.
+
+But strangely, they all naturally use a same pattern - put blog posts in a seperate folder, load posts as data during build and route **dynamically**. :thinking: Why?
+
+## Static Routing?
+
+The basic idea is, just like adding a new page to your website, **creating a specific route for each blog post**.
+
+Seem bad? No! It is the same! The difference is, you do not need to write blog post loader and renderer by yourself, but you leverage your framework to do them for you.
+
+## Implement it with SvelteKit & MDsveX
+
+Magic happens with [Svelte preprocess](https://svelte.dev/docs/svelte-compiler#preprocess). MDsveX "allows you to use Svelte components in your markdown, or markdown in your Svelte components", that is, `.svx` files can also be used just like normal `.svelte` files. What do that mean?
+
+**`+page.svx`** !
+
+So you know how to do it. Instead of writing blog post in something like `posts/name-balabala.svx`, write in `src/routes/posts/name-balabala/+page.svx`.
+
+### Post list and metadata
+
+Generating post list is rather simple, [Vite Glob Import](https://vitejs.dev/guide/features.html#glob-import) is enough. And thanks to MDsveX and [`<script context="module">`](https://svelte.dev/docs/svelte-components#script-context-module), frontmatter data can be exported in module [`metadata`](https://mdsvex.pngwn.io/docs#frontmatter-1).
+
+A post loader example (`src/lib/posts.ts`):
+
+```ts
+export const posts = Object.fromEntries(
+  Object.entries(
+    import.meta.glob<MetadataIn>('../routes/posts/\\(posts\\)/*/+page.svx', {
+      import: 'metadata',
+      eager: true,
+    })
+  )
+    .map<[string, Metadata]>(([path, metadata]) => [
+      '/posts/' + path.match(/\.\.\/routes\/posts\/\(posts\)\/(.*)\/\+page\.svx/)![1],
+      {
+        ...metadata,
+        tags: typeof metadata.tags === 'string' ? [metadata.tags] : metadata.tags || [],
+        time: dayjs(metadata.time),
+      },
+    ])
+    .sort(([, a], [, b]) => b.time.unix() - a.time.unix())
+);
+```
+
+This imports all posts in `src/routes/posts/(posts)/[name]/+page.svx` (notice [layout group](https://kit.svelte.dev/docs/advanced-routing#advanced-layouts-group) is used here in order to enable `/posts` page to use different layout than `/posts/[name]` pages), gets their url pathname for further quick matching and sort posts by time.
+
+Then you can use this `posts` in `src/routes/posts/+page.svelte` to list posts, and get post metadata in `src/routes/posts/(posts)/+layout.page` using `posts[$page.url.pathname]`.
+
+## Other enhancements
+
+### Images
+
+![](./fire.png)
+
+Guess how I add this image. Put it in `static`? Nonono, I just put it in the same directory as this blog post, and just write:
+
+```markdown
+![](./fire.png)
+```
+
+How do I achieve this? [svelte-preprocess-import-assets](https://github.com/bluwy/svelte-preprocess-import-assets). This tool seems not so useful at first glance, but if it is used together with MDsveX? Magic happens. Adding images using Markdown syntax is allowed, and it does no harm to website bundler.
+
+What's more, [Imagetools](https://github.com/JonasKruckenberg/imagetools) enables runtime/build-time image preprocessing. So you can write:
+
+```markdown
+![](./fire.png?flip&tint=ffaa22&format=webp)
+```
+
+And get:
+
+![](./fire.png?flip&tint=ffaa22&format=webp)
+
+### UnoCSS
+
+This is out of scope so I won't discuss too much. But with [Icons preset](https://unocss.dev/presets/icons), svg icons can be used in markdown easily like <span class="i-simple-icons:visualstudiocode" />
+
+```html
+<span class="i-simple-icons:visualstudiocode" />
+```
+
+Remember to set `display: inline-block` and `vertical-align: text-bottom` on icons to use them fluently in blog post paragraphs. You can use [Extra Properties](https://unocss.dev/presets/icons#extra-properties) to set up.
+
+### Syntax Highlighting
+
+[Shiki](https://shiki.matsu.io) is used. (Why this name :sob:)
+
+Some notes:
+
+- `{}` in svelte files will be processed by svelte compiler as svelte syntax... So these two characters must be escaped after running highlighter, for example using `.replace(/[{}]/g, (c) => ({ '{': '&#123;', '}': '&#125;' }[c]))`
+- Shiki themes are "inline", that is, set styles on code block tokens directly instead of using seperate css files. The good thing is it avoids conflicts between stylesheets, but the bad thing is it is difficult to support dark mode.
+
+  As [documented](https://github.com/shikijs/shiki/blob/main/docs/themes.md#2-generate-two-shiki-code-blocks-one-for-each-theme) in shiki, we can generate two code blocks and show them respectively under different color scheme. You can refer to `svelte.config.js` to see how it is implemented in this blog. Note that it is adapted from [markdown-it-shiki](https://github.com/antfu/markdown-it-shiki).

@@ -13,6 +13,7 @@ declare namespace svelteHTML {
     | 'inset'
     | 'grid'
     | 'flex'
+    | 'inline'
     | 'bg'
     | 'text'
     | 'float'
