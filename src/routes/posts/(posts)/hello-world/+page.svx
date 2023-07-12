@@ -14,7 +14,7 @@ tags:
 
 - [Vite](https://vitejs.dev/)
   - [Imagetools](https://github.com/JonasKruckenberg/imagetools)
-  - [UnoCSS](unocss.dev/)
+  - [UnoCSS](https://unocss.dev/)
   - [(PostCSS)](https://postcss.org/)
 - [SvelteKit](https://kit.svelte.dev/)
   - [MDsveX](https://mdsvex.pngwn.io/)
