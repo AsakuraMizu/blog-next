@@ -1,0 +1,51 @@
+---
+title: 如何使用 SiBot 查询大饼中二 rating
+time: 2023-7-18 4:04
+tags:
+  - chunithm
+  - bot
+---
+
+## TOC
+
+## 绑定帐号
+
+此方法在移动端设备上可能表现不佳, 请优先选择使用pc端设备.
+
+### 登录 Otogame 网站
+
+略
+
+### 添加脚本书签
+
+将下面的链接保存为浏览器书签:
+
+[otogame更新token](javascript:alert(JSON.parse(localStorage.getItem('REFRESH_TOKEN')).value))
+
+### 获取 token
+
+**在 Otogame 网站页面**, 打开上一步中添加的书签; 此时应当弹出一个如下的弹窗, 请复制其中的内容.
+
+![alert](./alert.png)
+
+### 绑定至 bot
+
+调用如下指令:
+
+```sh
+kt 绑大饼 token
+```
+
+其中 token 为上一步中获取的 token
+
+## 查分
+
+```sh
+kt b30o
+```
+
+## 常见问题
+
+### 重新绑定
+
+token 具有一定时效性, 虽然它可以自动更新, 但如果长时间不查分仍可能会过期. 重新绑定只需要进行 "获取 token" 和 "绑定至 bot" 两步即可.
