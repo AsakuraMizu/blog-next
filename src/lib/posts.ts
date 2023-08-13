@@ -19,7 +19,7 @@ export const posts = Object.fromEntries(
     import.meta.glob<MetadataIn>('../routes/posts/\\(posts\\)/*/+page.svx', {
       import: 'metadata',
       eager: true,
-    })
+    }),
   )
     .map<[string, Metadata]>(([path, metadata]) => [
       '/posts/' + path.match(/\.\.\/routes\/posts\/\(posts\)\/(.*)\/\+page\.svx/)![1],
@@ -29,5 +29,5 @@ export const posts = Object.fromEntries(
         time: dayjs(metadata.time),
       },
     ])
-    .sort(([, a], [, b]) => b.time.unix() - a.time.unix())
+    .sort(([, a], [, b]) => b.time.unix() - a.time.unix()),
 );

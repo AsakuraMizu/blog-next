@@ -41,7 +41,7 @@ const config = {
             .replace('<pre class="shiki ', '<pre class="shiki shiki-dark ');
           return `<div class="shiki-container language-${lang}">${dark}${light}</div>`.replace(
             /[{}]/g,
-            (c) => ({ '{': '&#123;', '}': '&#125;' }[c])
+            (c) => ({ '{': '&#123;', '}': '&#125;' })[c],
           );
         },
       },
