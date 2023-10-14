@@ -4,8 +4,10 @@ import { h } from 'hastscript';
 import { mdsvex } from 'mdsvex';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeExternalLinks from 'rehype-external-links';
+import rehypeKatex from 'rehype-katex';
 import rehypeSlug from 'rehype-slug';
 import remarkGemoji from 'remark-gemoji';
+import remarkMath from 'remark-math';
 import remarkToc from 'remark-toc';
 import { getHighlighter } from 'shiki';
 import { importAssets } from 'svelte-preprocess-import-assets';
@@ -25,11 +27,12 @@ const config = {
   extensions: ['.svelte', '.svx'],
   preprocess: [
     mdsvex({
-      remarkPlugins: [remarkGemoji, [remarkToc, { tight: true }]],
+      remarkPlugins: [remarkGemoji, [remarkToc, { tight: true }], remarkMath],
       rehypePlugins: [
         rehypeSlug,
         [rehypeAutolinkHeadings, { behavior: 'append', content: h(null, ['#']) }],
         rehypeExternalLinks,
+        rehypeKatex,
       ],
       highlight: {
         highlighter(code, lang) {
@@ -50,6 +53,12 @@ const config = {
     importAssets(),
   ],
 
+  onwarn: (warning, handler) => {
+    if (warning.code.startsWith('a11y-')) {
+      return;
+    }
+    handler(warning);
+  },
   kit: {
     adapter: adapter(),
   },

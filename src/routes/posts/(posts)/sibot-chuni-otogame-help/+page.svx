@@ -8,6 +8,10 @@ tags:
 
 ## TOC
 
+## 注意 :warning:
+
+**此方式不受 otogame 官方支持**
+
 ## 绑定帐号
 
 此方法在移动端设备上可能表现不佳, 请优先选择使用pc端设备.
@@ -16,17 +20,15 @@ tags:
 
 略
 
-### 添加脚本书签
-
-将下面的链接保存为浏览器书签:
-
-[otogame更新token](javascript:alert(JSON.parse(localStorage.getItem('REFRESH_TOKEN')).value))
-
 ### 获取 token
 
-**在 Otogame 网站页面**, 打开上一步中添加的书签; 此时应当弹出一个如下的弹窗, 请复制其中的内容.
+**在 Otogame 网站页面**, 打开开发者工具并切换到控制台页面 (使用 Ctrl+Shift+K / Ctrl+Shift+I / F12 等键盘快捷键) 或在浏览器菜单"更多工具"中打开开发者工具. 复制以下内容粘贴至控制台并回车:
 
-![alert](./alert.png)
+```javascript
+console.log(JSON.parse(localStorage.getItem('REFRESH_TOKEN')).value)
+```
+
+复制控制台中输出的形如 `v2.local.xxxx` 的这一行内容.
 
 ### 绑定至 bot
 
@@ -43,6 +45,8 @@ kt 绑大饼 token
 ```sh
 kt b30o
 ```
+
+:warning: 10月14日更新后, 您的账号需要够买帝企鹅才可正常使用查分服务.
 
 ## 常见问题
 
